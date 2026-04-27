@@ -1,345 +1,454 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Köket Överkalix</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Köket Restaurang & Pizzeria</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #000;
-      color: white;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: #111;
-      border-bottom: 1px solid #333;
-      z-index: 1000;
-      padding: 25px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Plus Jakarta Sans",sans-serif;background:#020202;color:#fff;overflow-x:hidden}
+:root{--accent:#d946ef}
+a{text-decoration:none;color:inherit}
 
-    .logo {
-      font-size: 30px;
-      font-weight: 900;
-    }
+.nav{position:fixed;top:0;left:0;width:100%;z-index:50;padding:24px 24px;transition:.4s}
+.nav.scrolled{background:rgba(0,0,0,.82);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.06);padding:16px 24px}
+.nav-inner{max-width:1280px;margin:auto;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-icon{width:48px;height:48px;border-radius:18px;background:var(--accent);display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(217,70,239,.5)}
+.logo-text{font-size:24px;font-weight:900;text-transform:uppercase;letter-spacing:-1px}
+.menu-btn{background:none;border:0;color:white;font-size:30px}
+.desktop-links{display:none;gap:40px}
+.desktop-links a{font-size:14px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+.desktop-links a:hover{color:var(--accent)}
 
-    .logo span {
-      color: #e56bff;
-      font-style: italic;
-      text-shadow: 0 0 15px #e56bff;
-    }
+.hero{position:relative;height:100vh;display:flex;align-items:center;padding:0 24px;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;opacity:.6;animation:zoom 20s infinite alternate linear}
+.hero-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(to right,#000 0%,rgba(0,0,0,.72) 38%,rgba(0,0,0,.08) 100%)}
+.hero-content{position:relative;z-index:2;width:100%;max-width:1280px;margin:auto;padding-top:80px}
+.badge{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;background:rgba(217,70,239,.2);border:1px solid rgba(217,70,239,.3);border-radius:999px;margin-bottom:32px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 1.4s infinite}
+.badge span{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.2em;color:var(--accent)}
+h1{font-size:clamp(58px,13vw,112px);line-height:1.02;font-weight:900;text-transform:uppercase;font-style:italic;letter-spacing:-3px;margin-bottom:32px}
+.outline{color:transparent;-webkit-text-stroke:1px var(--accent)}
+.hero p{max-width:580px;color:rgba(255,255,255,.62);font-size:18px;line-height:1.7;font-weight:600;margin-bottom:44px}
+.actions{display:flex;flex-direction:column;gap:20px;align-items:flex-start}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:20px 40px;border-radius:16px;background:var(--accent);color:white;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.2em;box-shadow:0 0 40px rgba(217,70,239,.4);border:0}
+.btn.secondary{background:transparent;border:1px solid rgba(255,255,255,.22);box-shadow:none}
+.btn.secondary:hover{background:white;color:black}
 
-    .menu-icon {
-      font-size: 36px;
-    }
+section{padding:120px 24px}
+.wrap{max-width:1280px;margin:auto}
+.section-head{margin-bottom:48px}
+.section-head.center{text-align:center}
+.kicker{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.5em;color:var(--accent);margin-bottom:18px}
+.section-title{font-size:clamp(44px,8vw,76px);font-weight:900;text-transform:uppercase;font-style:italic;line-height:1.05;letter-spacing:-2px}
+.order{background:#050505}
+.form-card{max-width:900px;margin:auto;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);border-radius:48px;padding:32px;backdrop-filter:blur(18px);box-shadow:0 25px 80px rgba(0,0,0,.5)}
+.form-grid{display:grid;gap:28px}
+label{display:block;margin:0 0 10px 16px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.3em;color:rgba(255,255,255,.42)}
+input,select,textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.11);border-radius:16px;padding:20px 24px;color:white;font-size:16px;outline:none}
+select option{background:#050505}
+textarea{min-height:110px;resize:none}
+input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+.full{grid-column:1/-1}
+.submit{width:100%;padding:24px;margin-top:10px}
 
-    main {
-      padding: 150px 22px 60px;
-      max-width: 800px;
-      margin: auto;
-    }
+.lunch{background:#020202}
+.lunch-grid{display:grid;gap:64px;align-items:center}
+.lunch-list{display:grid;gap:24px}
+.lunch-item{display:flex;gap:24px;align-items:flex-start;padding:24px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);border-radius:28px}
+.day{color:var(--accent);font-weight:900;text-transform:uppercase;letter-spacing:.2em;font-size:14px;padding-top:4px}
+.lunch-item p{font-size:20px;font-weight:800}
+.lunch-img{position:relative}
+.lunch-img .photo{aspect-ratio:4/5;border-radius:48px;overflow:hidden}
+.lunch-img img{width:100%;height:100%;object-fit:cover}
+.price-card{display:none;position:absolute;left:-40px;bottom:-40px;background:var(--accent);padding:40px;border-radius:44px;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.price-card strong{display:block;font-size:40px;font-weight:900;font-style:italic}
 
-    .small-title {
-      color: #e56bff;
-      letter-spacing: 8px;
-      text-align: center;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
+.menu-section{background:#020202;color:white}
+.menu-top{display:flex;flex-direction:column;gap:28px;margin-bottom:70px}
+.filters{display:flex;gap:14px;flex-wrap:wrap}
+.filters button{padding:10px 24px;border:2px solid #000;border-radius:999px;background:white;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.18em}
+.menu-grid{display:grid;gap:40px}
+.dish{cursor:pointer}
+.dish-img{position:relative;aspect-ratio:1/1;border-radius:32px;overflow:hidden;background:#eee;margin-bottom:24px}
+.dish-img img{width:100%;height:100%;object-fit:cover;transition:.7s}
+.dish:hover img{transform:scale(1.1)}
+.dish-price{position:absolute;top:16px;right:16px;background:white;padding:10px 16px;border-radius:14px;font-weight:900;box-shadow:0 10px 25px rgba(0,0,0,.18)}
+.dish-info{display:flex;align-items:center;justify-content:space-between;padding:0 8px}
+.dish h3{font-size:24px;font-weight:900;text-transform:uppercase;letter-spacing:-1px}
+.dish p{font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:rgba(0,0,0,.4);font-style:italic}
+.circle{width:42px;height:42px;border-radius:50%;border:2px solid #000;display:flex;align-items:center;justify-content:center;font-weight:900}
+.dish:hover .circle{background:var(--accent);border-color:var(--accent);color:white}
 
-    h1 {
-      text-align: center;
-      font-size: 42px;
-      line-height: 1.1;
-      margin-bottom: 40px;
-      font-weight: 900;
-    }
+footer{background:#000;padding:120px 24px 48px}
+.footer-inner{max-width:1280px;margin:auto;border-top:1px solid rgba(255,255,255,.1);padding-top:80px}
+.footer-grid{display:grid;gap:60px;margin-bottom:80px}
+.footer-title{font-size:56px;font-weight:900;text-transform:uppercase;font-style:italic;line-height:.82;letter-spacing:-3px;margin-bottom:34px}
+.address{display:flex;gap:18px;align-items:flex-start;font-size:28px;font-weight:900;line-height:1}
+.socials{display:flex;gap:22px;margin-top:48px}
+.socials a{width:56px;height:56px;border:1px solid rgba(255,255,255,.1);border-radius:18px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.6);font-weight:900}
+.foot-head{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.3em;color:rgba(255,255,255,.4);margin-bottom:40px}
+.hours{display:grid;gap:24px}
+.hours div{display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:16px;font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:.12em}
+.hours span:last-child{color:var(--accent)}
+.contact-phone{font-size:32px;font-weight:900;margin-bottom:16px}
+.contact-mail{font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.2em;color:rgba(255,255,255,.4)}
+.footer-bottom{display:flex;flex-direction:column;gap:16px;border-top:1px solid rgba(255,255,255,.06);padding-top:48px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.35em;color:rgba(255,255,255,.22)}
 
-    .card {
-      background: #111;
-      border: 1px solid #222;
-      border-radius: 35px;
-      padding: 30px;
-      margin-bottom: 25px;
-      box-shadow: 0 0 25px rgba(229, 107, 255, 0.08);
-    }
+.mobile{position:fixed;inset:0;background:#000;z-index:80;padding:40px;display:none;flex-direction:column;justify-content:center}
+.mobile.open{display:flex}
+.close{position:absolute;top:40px;right:40px;background:none;border:0;color:white;font-size:48px}
+.mobile a{font-size:clamp(42px,12vw,72px);font-weight:900;text-transform:uppercase;font-style:italic;line-height:.9;letter-spacing:-3px;margin-bottom:32px}
+.mobile a:hover{color:var(--accent)}
 
-    .item {
-      border-bottom: 1px solid #333;
-      padding: 20px 0;
-    }
+@keyframes zoom{from{transform:scale(1)}to{transform:scale(1.15)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 
-    .item:last-child {
-      border-bottom: none;
-    }
-
-    .item h3 {
-      margin: 0 0 8px;
-      font-size: 24px;
-    }
-
-    .item p {
-      color: #aaa;
-      margin: 0 0 15px;
-    }
-
-    button {
-      background: #e56bff;
-      color: black;
-      border: none;
-      padding: 14px 20px;
-      border-radius: 999px;
-      font-weight: 800;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      opacity: 0.85;
-    }
-
-    input, textarea {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 15px;
-      margin-top: 10px;
-      margin-bottom: 15px;
-      background: #050505;
-      border: 1px solid #333;
-      border-radius: 16px;
-      color: white;
-      font-size: 16px;
-    }
-
-    label {
-      font-weight: bold;
-    }
-
-    .cart-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      border-bottom: 1px solid #333;
-      padding: 12px 0;
-    }
-
-    .remove {
-      background: transparent;
-      color: #e56bff;
-      padding: 0;
-      font-size: 14px;
-    }
-
-    .sms-btn {
-      width: 100%;
-      margin-top: 20px;
-      font-size: 18px;
-      padding: 18px;
-    }
-
-    .success {
-      display: none;
-      text-align: center;
-      padding-top: 70px;
-    }
-
-    .success-icon {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      margin: 0 auto 30px;
-      background: rgba(229, 107, 255, 0.18);
-      border: 2px solid #e56bff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 55px;
-      color: #e56bff;
-      box-shadow: 0 0 25px rgba(229, 107, 255, 0.5);
-    }
-
-    .success h2 {
-      font-size: 40px;
-      margin-bottom: 15px;
-    }
-
-    .success p {
-      color: #aaa;
-      font-size: 24px;
-      line-height: 1.5;
-    }
-
-    .new-order {
-      background: transparent;
-      color: #e56bff;
-      font-size: 22px;
-      margin-top: 25px;
-    }
-  </style>
+@media(min-width:768px){
+.actions{flex-direction:row;align-items:center}
+.form-grid{grid-template-columns:1fr 1fr}
+.menu-grid{grid-template-columns:repeat(2,1fr)}
+.lunch-grid{grid-template-columns:1fr 1fr}
+.footer-grid{grid-template-columns:2fr 1fr 1fr}
+.footer-bottom{flex-direction:row;justify-content:space-between}
+}
+@media(min-width:1024px){
+.desktop-links{display:flex}
+.menu-btn{display:none}
+.menu-grid{grid-template-columns:repeat(4,1fr)}
+.price-card{display:block}
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    <div class="logo">KÖKET <span>Restaurang</span></div>
-    <div class="menu-icon">☰</div>
-  </header>
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <div class="logo">
+      <div class="logo-icon">🍕</div>
+      <div class="logo-text">KÖKET</div>
+    </div>
+    <div class="desktop-links">
+      <a href="#">Hem</a>
+      <a href="#sms-order">Beställ Online</a>
+      <a href="#lunch">Dagens Lunch</a>
+      <a href="#meny">Meny</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
+    <button class="menu-btn" onclick="openMenu()">☰</button>
+  </div>
+</nav>
 
-  <main>
-    <section id="orderPage">
-      <div class="small-title">TAKE AWAY SYSTEMS</div>
-      <h1>ONLINE BESTÄLLNING</h1>
+<div class="mobile" id="mobile">
+  <button class="close" onclick="closeMenu()">×</button>
+  <a href="#" onclick="closeMenu()">Hem</a>
+  <a href="#sms-order" onclick="closeMenu()">Beställ Online</a>
+  <a href="#lunch" onclick="closeMenu()">Dagens Lunch</a>
+  <a href="#meny" onclick="closeMenu()">Meny</a>
+  <a href="#kontakt" onclick="closeMenu()">Kontakt</a>
+</div>
 
-      <div class="card">
-        <h2>Meny</h2>
+<section class="hero">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop" alt="Pizza">
+  </div>
+  <div class="hero-content">
+    <div class="badge"><i class="dot"></i><span>Öppet ikväll till 22:00</span></div>
+    <h1>Smak av<br><span class="outline">Kvalitet</span></h1>
+    <p>God mat i Överkalix. Välkommen till en plats för pizza, dryck och trevlig atmosfär.</p>
+    <div class="actions">
+      <a class="btn" href="#sms-order">Beställ Online</a>
+      <a class="btn secondary" href="#meny">Utforska Meny</a>
+    </div>
+  </div>
+</section>
 
-        <div class="item">
-          <h3>Pizza 1</h3>
-          <p>Beskrivning här</p>
-          <button onclick="addToCart('Pizza 1')">Lägg till</button>
+<section class="order" id="sms-order">
+  <div class="wrap">
+    <div class="section-head center">
+      <div class="kicker">Take Away Systems</div>
+      <h2 class="section-title">Online Beställning</h2>
+    </div>
+
+    <form class="form-card" onsubmit="sendSMS(event)">
+      <div class="form-grid">
+        <div>
+          <label>Namn *</label>
+          <input id="name" required placeholder="Ditt fullständiga namn">
         </div>
-
-        <div class="item">
-          <h3>Pizza 2</h3>
-          <p>Beskrivning här</p>
-          <button onclick="addToCart('Pizza 2')">Lägg till</button>
+        <div>
+          <label>Telefon *</label>
+          <input id="phone" required placeholder="07X-XXX XX XX">
         </div>
+        <div>
+          <label>Välj Maträtt *</label>
+      <div style="display:flex;flex-direction:column;gap:10px;">
 
-        <div class="item">
-          <h3>Kebabtallrik</h3>
-          <p>Beskrivning här</p>
-          <button onclick="addToCart('Kebabtallrik')">Lägg till</button>
+  <button type="button" onclick="addToCart('Margherita')">
+    Margherita (110 kr)
+  </button>
+
+  <button type="button" onclick="addToCart('Vesuvio')">
+    Vesuvio (120 kr)
+  </button>
+
+  <button type="button" onclick="addToCart('Calzone')">
+    Calzone (125 kr)
+  </button>
+
+  <button type="button" onclick="addToCart('Vegetaria')">
+    Vegetaria (130 kr)
+  </button>
+
+  <button type="button" onclick="addToCart('Dagens Lunch')">
+    Dagens Lunch
+  </button>
+
+</div>
         </div>
+        <div class="form-grid" style="grid-template-columns:1fr 1fr;gap:16px">
+          <div>
+            
+          </div>
+          <div>
+            <label>Hämttid *</label>
+            <input id="time" required type="time">
+          </div>
+        </div>
+        <div class="full">
+          <label>Extra önskemål</label>
+          <input id="extra" placeholder="Specialönskemål...">
+        </div>
+        <div class="full">
+          <label>Meddelande till köket</label>
+          <textarea id="message" placeholder="Skriv något här..."></textarea>
+        </div>
+        <div class="full">
+          <div id="cart" style="margin:15px 0;"></div>
 
-        <div class="item">
-          <h3>Hamburgare</h3>
-          <p>Beskrivning här</p>
-          <button onclick="addToCart('Hamburgare')">Lägg till</button>
+<button class="btn bottom" type="submit">Skicka Beställning</button>
+          <button class="btn submit" type="submit">Skicka Beställning</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="lunch" id="lunch">
+  <div class="wrap lunch-grid">
+    <div>
+      <div class="section-head">
+        <div class="kicker">Måndag - Fredag 10:30-14:00</div>
+        <h2 class="section-title">Dagens Lunch</h2>
+      </div>
+
+      <div class="lunch-list">
+        <div class="lunch-item"><span class="day">Mån</span><p>Klassisk Husmanskost & Pizza Buffé</p></div>
+        <div class="lunch-item"><span class="day">Tis</span><p>Grillad Kyckling med Rostad Potatis</p></div>
+        <div class="lunch-item"><span class="day">Ons</span><p>Pasta Carbonara & Stor Salladsbar</p></div>
+        <div class="lunch-item"><span class="day">Tor</span><p>Ärtsoppa & Pannkakor</p></div>
+        <div class="lunch-item"><span class="day">Fre</span><p>Helgstek med Gräddsås & Gelé</p></div>
+      </div>
+    </div>
+
+    <div class="lunch-img">
+      <div class="photo">
+        <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?q=80&w=2070&auto=format&fit=crop" alt="Atmosphere">
+      </div>
+      <div class="price-card">
+        <strong>125:-</strong>
+        <span>Inkl. dryck, kaffe & kaka</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="menu-section" id="meny">
+  <div class="wrap">
+    <div class="menu-top">
+      <div class="section-head">
+        <div class="kicker" style="color:rgba(0,0,0,.3)">Utvalda rätter</div>
+        <h2 class="section-title">Vår Meny</h2>
+      </div>
+      <div class="filters">
+        <button>Pizza</button><button>Pasta</button><button>Grill</button><button>Sallad</button>
+      </div>
+    </div>
+
+    <div class="menu-grid">
+      <div class="dish" onclick="chooseDish('Margherita (110 kr)')">
+        <div class="dish-img"><img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=2070&auto=format&fit=crop"><span class="dish-price">110 kr</span></div>
+        <div class="dish-info"><div><h3>Margherita</h3><p>Pizza</p></div><div class="circle">›</div></div>
+      </div>
+
+      <div class="dish" onclick="chooseDish('Vesuvio (120 kr)')">
+        <div class="dish-img"><img src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?q=80&w=1935&auto=format&fit=crop"><span class="dish-price">120 kr</span></div>
+        <div class="dish-info"><div><h3>Vesuvio</h3><p>Pizza</p></div><div class="circle">›</div></div>
+      </div>
+
+      <div class="dish" onclick="chooseDish('Calzone (125 kr)')">
+        <div class="dish-img"><img src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?q=80&w=2076&auto=format&fit=crop"><span class="dish-price">125 kr</span></div>
+        <div class="dish-info"><div><h3>Calzone</h3><p>Inbakad</p></div><div class="circle">›</div></div>
+      </div>
+
+      <div class="dish" onclick="chooseDish('Vegetaria (130 kr)')">
+        <div class="dish-img"><img src="https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?q=80&w=1974&auto=format&fit=crop"><span class="dish-price">130 kr</span></div>
+        <div class="dish-info"><div><h3>Vegetaria</h3><p>Pizza</p></div><div class="circle">›</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="kontakt">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <h2 class="footer-title">Hitta Hit</h2>
+        <div class="address"><span>📍</span><p>Storgatan 12,<br>956 31 Överkalix</p></div>
+        <div class="socials"><a href="#">◎</a><a href="#">f</a></div>
+      </div>
+
+      <div>
+        <div class="foot-head">Öppettider</div>
+        <div class="hours">
+          <div><span>Mån - Tor</span><span>10:30 - 21:00</span></div>
+          <div><span>Fre</span><span>10:30 - 22:00</span></div>
+          <div><span>Lör - Sön</span><span>12:00 - 22:00</span></div>
         </div>
       </div>
 
-      <div class="card">
-        <h2>Din beställning</h2>
-        <div id="cart"></div>
-
-        <label>Ditt namn</label>
-        <input id="customerName" placeholder="Skriv ditt namn" />
-
-        <label>Ditt telefonnummer</label>
-        <input id="customerPhone" placeholder="Skriv ditt telefonnummer" />
-
-        <label>Hämtningstid</label>
-        <input id="pickupTime" placeholder="Exempel: 17:30" />
-
-        <label>Kommentar</label>
-        <textarea id="comment" placeholder="Exempel: utan lök, extra sås"></textarea>
-
-        <button class="sms-btn" onclick="sendSMS()">Skicka beställning via SMS</button>
+      <div>
+        <div class="foot-head">Kontakt</div>
+        <p class="contact-phone">0926-771 00</p>
+        <p class="contact-mail">info@koket.se</p>
       </div>
-    </section>
+    </div>
 
-    <section id="successPage" class="success">
-      <h1>ONLINE BESTÄLLNING</h1>
+    <div class="footer-bottom">
+      <p>© 2026 Köket Restaurang & Pizzeria.</p>
+      <p>Design by EB WEB DESIGN</p>
+    </div>
+  </div>
+</footer>
 
-      <div class="card">
-        <div class="success-icon">🕒</div>
-        <h2>Tack!</h2>
-        <p>
-          Din beställning är skapad.<br>
-          Restaurangen bekräftar vid behov.
-        </p>
+<script>
+const RESTAURANT_PHONE = "+46702929024";
 
-        <button class="new-order" onclick="newOrder()">Gör en ny beställning</button>
-      </div>
-    </section>
-  </main>
+window.addEventListener("scroll",()=> {
+  document.getElementById("nav").classList.toggle("scrolled", window.scrollY > 50);
+});
 
+function openMenu(){document.getElementById("mobile").classList.add("open")}
+function closeMenu(){document.getElementById("mobile").classList.remove("open")}
+
+function chooseDish(dish){
+  document.getElementById("dish").value = dish;
+  document.getElementById("sms-order").scrollIntoView({behavior:"smooth"});
+}
+
+function sendSMS(e){
+  e.preventDefault();
+
+  const name=document.getElementById("name").value.trim();
+  const phone=document.getElementById("phone").value.trim();
+  const dish=document.getElementById("dish").value.trim();
+  const quantity=document.getElementById("quantity").value.trim();
+  const time=document.getElementById("time").value.trim();
+  const extra=document.getElementById("extra").value.trim();
+  const message=document.getElementById("message").value.trim();
+
+  if(!name || !phone || !dish || !time){
+    alert("Fyll i namn, telefon, maträtt och hämttid.");
+    return;
+  }
+
+  const text =
+`Hej Köket! Jag vill beställa take away:
+Namn: ${name}
+Telefon: ${phone}
+Maträtt: ${dish}
+Antal: ${quantity}
+Extra: ${extra || "Inga"}
+Hämttid: ${time}${message ? "\nMeddelande: " + message : ""}`;
+
+  const isIOS=/iPad|iPhone|iPod/i.test(navigator.userAgent);
+  const sep=isIOS ? "&" : "?";
+  window.location.href=`sms:${RESTAURANT_PHONE}${sep}body=${encodeURIComponent(text)}`;
+}
   <script>
-    const RESTAURANG_TELEFON = "0701234567";
+let cart = [];
 
-    let cart = [];
+function addToCart(name) {
+  cart.push(name);
+  renderCart();
+}
 
-    function addToCart(name) {
-      cart.push(name);
-      renderCart();
-    }
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  renderCart();
+}
 
-    function removeFromCart(index) {
-      cart.splice(index, 1);
-      renderCart();
-    }
+function renderCart() {
+  const cartDiv = document.getElementById("cart");
 
-    function renderCart() {
-      const cartDiv = document.getElementById("cart");
+  if (!cartDiv) return;
 
-      if (cart.length === 0) {
-        cartDiv.innerHTML = "<p style='color:#aaa;'>Ingen maträtt vald ännu.</p>";
-        return;
-      }
+  if (cart.length === 0) {
+    cartDiv.innerHTML = "<p style='color:#aaa;'>Ingen maträtt vald ännu.</p>";
+    return;
+  }
 
-      cartDiv.innerHTML = cart.map((item, index) => `
-        <div class="cart-row">
-          <span>${index + 1}. ${item}</span>
-          <button class="remove" onclick="removeFromCart(${index})">Ta bort</button>
-        </div>
-      `).join("");
-    }
+  cartDiv.innerHTML = cart.map((item, index) => `
+    <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+      <span>${index + 1}. ${item}</span>
+      <button onclick="removeFromCart(${index})" style="background:none;color:#e56bff;border:none;">Ta bort</button>
+    </div>
+  `).join("");
+}
 
-    function sendSMS() {
-      if (cart.length === 0) {
-        alert("Lägg till minst en maträtt först.");
-        return;
-      }
+function sendSMS() {
+  if (cart.length === 0) {
+    alert("Lägg till minst en maträtt först.");
+    return;
+  }
 
-      const name = document.getElementById("customerName").value;
-      const phone = document.getElementById("customerPhone").value;
-      const pickup = document.getElementById("pickupTime").value;
-      const comment = document.getElementById("comment").value;
+  const name = document.getElementById("customerName")?.value || "";
+  const phone = document.getElementById("customerPhone")?.value || "";
+  const pickup = document.getElementById("pickupTime")?.value || "";
+  const comment = document.getElementById("comment")?.value || "";
 
-      const orderText =
+  if (cart.length === 0) {
+  alert("Lägg till minst en maträtt");
+  return;
+}
+  const text =
 `Hej! Jag vill beställa:
 
-${cart.map((item, index) => `${index + 1}. ${item}`).join("\n")}
+${cart.map((item, i) => `${i+1}. ${item}`).join("\n")}
 
 Namn: ${name}
 Telefon: ${phone}
-Hämtningstid: ${pickup}
+Tid: ${pickup}
 Kommentar: ${comment}`;
 
-      window.location.href = `sms:${RESTAURANG_TELEFON}?&body=${encodeURIComponent(orderText)}`;
+  window.location.href = `sms:0701234567?&body=${encodeURIComponent(text)}`;
 
-      setTimeout(() => {
-        document.getElementById("orderPage").style.display = "none";
-        document.getElementById("successPage").style.display = "block";
-        window.scrollTo(0, 0);
-      }, 700);
-    }
+  setTimeout(() => {
+    const success = document.getElementById("successMessage");
+    if (success) success.style.display = "block";
+  }, 500);
+}
 
-    function newOrder() {
-      cart = [];
-      renderCart();
+renderCart();
+</script>
 
-      document.getElementById("customerName").value = "";
-      document.getElementById("customerPhone").value = "";
-      document.getElementById("pickupTime").value = "";
-      document.getElementById("comment").value = "";
-
-      document.getElementById("successPage").style.display = "none";
-      document.getElementById("orderPage").style.display = "block";
-      window.scrollTo(0, 0);
-    }
-
-    renderCart();
-  </script>
 
 </body>
 </html>
