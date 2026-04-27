@@ -14,7 +14,7 @@ body{font-family:"Plus Jakarta Sans",sans-serif;background:#020202;color:#fff;ov
 :root{--accent:#d946ef}
 a{text-decoration:none;color:inherit}
 
-.nav{position:fixed;top:0;left:0;width:100%;z-index:50;padding:24px 24px;transition:.4s}
+.nav{position:fixed;top:0;left:0;width:100%;z-index:50;padding:24px;transition:.4s}
 .nav.scrolled{background:rgba(0,0,0,.82);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.06);padding:16px 24px}
 .nav-inner{max-width:1280px;margin:auto;display:flex;align-items:center;justify-content:space-between}
 .logo{display:flex;align-items:center;gap:12px}
@@ -37,7 +37,7 @@ h1{font-size:clamp(58px,13vw,112px);line-height:1.02;font-weight:900;text-transf
 .outline{color:transparent;-webkit-text-stroke:1px var(--accent)}
 .hero p{max-width:580px;color:rgba(255,255,255,.62);font-size:18px;line-height:1.7;font-weight:600;margin-bottom:44px}
 .actions{display:flex;flex-direction:column;gap:20px;align-items:flex-start}
-.btn{display:inline-flex;align-items:center;justify-content:center;padding:20px 40px;border-radius:16px;background:var(--accent);color:white;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.2em;box-shadow:0 0 40px rgba(217,70,239,.4);border:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:20px 40px;border-radius:16px;background:var(--accent);color:white;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.2em;box-shadow:0 0 40px rgba(217,70,239,.4);border:0;cursor:pointer}
 .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,.22);box-shadow:none}
 .btn.secondary:hover{background:white;color:black}
 
@@ -47,16 +47,24 @@ section{padding:120px 24px}
 .section-head.center{text-align:center}
 .kicker{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.5em;color:var(--accent);margin-bottom:18px}
 .section-title{font-size:clamp(44px,8vw,76px);font-weight:900;text-transform:uppercase;font-style:italic;line-height:1.05;letter-spacing:-2px}
+
 .order{background:#050505}
 .form-card{max-width:900px;margin:auto;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);border-radius:48px;padding:32px;backdrop-filter:blur(18px);box-shadow:0 25px 80px rgba(0,0,0,.5)}
 .form-grid{display:grid;gap:28px}
 label{display:block;margin:0 0 10px 16px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.3em;color:rgba(255,255,255,.42)}
-input,select,textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.11);border-radius:16px;padding:20px 24px;color:white;font-size:16px;outline:none}
-select option{background:#050505}
+input,textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.11);border-radius:16px;padding:20px 24px;color:white;font-size:16px;outline:none}
 textarea{min-height:110px;resize:none}
-input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+input:focus,textarea:focus{border-color:var(--accent)}
 .full{grid-column:1/-1}
 .submit{width:100%;padding:24px;margin-top:10px}
+.food-buttons{display:flex;flex-direction:column;gap:10px}
+.food-buttons button{background:white;color:black;border:0;border-radius:999px;padding:13px 18px;font-weight:800;cursor:pointer}
+.food-buttons button:hover{background:var(--accent);color:white}
+.cart-box{margin:15px 0;padding:18px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+.cart-row{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:10px}
+.cart-row button{background:none;color:var(--accent);border:none;font-weight:900;cursor:pointer}
+.success-message{display:none;text-align:center;margin-top:20px;color:#fff;font-weight:900}
+.success-message p{color:rgba(255,255,255,.65);font-weight:700;margin-top:8px}
 
 .lunch{background:#020202}
 .lunch-grid{display:grid;gap:64px;align-items:center}
@@ -79,11 +87,11 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent)}
 .dish-img{position:relative;aspect-ratio:1/1;border-radius:32px;overflow:hidden;background:#eee;margin-bottom:24px}
 .dish-img img{width:100%;height:100%;object-fit:cover;transition:.7s}
 .dish:hover img{transform:scale(1.1)}
-.dish-price{position:absolute;top:16px;right:16px;background:white;padding:10px 16px;border-radius:14px;font-weight:900;box-shadow:0 10px 25px rgba(0,0,0,.18)}
+.dish-price{position:absolute;top:16px;right:16px;background:white;color:black;padding:10px 16px;border-radius:14px;font-weight:900}
 .dish-info{display:flex;align-items:center;justify-content:space-between;padding:0 8px}
 .dish h3{font-size:24px;font-weight:900;text-transform:uppercase;letter-spacing:-1px}
-.dish p{font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:rgba(0,0,0,.4);font-style:italic}
-.circle{width:42px;height:42px;border-radius:50%;border:2px solid #000;display:flex;align-items:center;justify-content:center;font-weight:900}
+.dish p{font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.4);font-style:italic}
+.circle{width:42px;height:42px;border-radius:50%;border:2px solid white;display:flex;align-items:center;justify-content:center;font-weight:900}
 .dish:hover .circle{background:var(--accent);border-color:var(--accent);color:white}
 
 footer{background:#000;padding:120px 24px 48px}
@@ -183,58 +191,49 @@ footer{background:#000;padding:120px 24px 48px}
           <label>Namn *</label>
           <input id="name" required placeholder="Ditt fullständiga namn">
         </div>
+
         <div>
           <label>Telefon *</label>
           <input id="phone" required placeholder="07X-XXX XX XX">
         </div>
-        <div>
-          <label>Välj Maträtt *</label>
-      <div style="display:flex;flex-direction:column;gap:10px;">
 
-  <button type="button" onclick="addToCart('Margherita')">
-    Margherita (110 kr)
-  </button>
-
-  <button type="button" onclick="addToCart('Vesuvio')">
-    Vesuvio (120 kr)
-  </button>
-
-  <button type="button" onclick="addToCart('Calzone')">
-    Calzone (125 kr)
-  </button>
-
-  <button type="button" onclick="addToCart('Vegetaria')">
-    Vegetaria (130 kr)
-  </button>
-
-  <button type="button" onclick="addToCart('Dagens Lunch')">
-    Dagens Lunch
-  </button>
-
-</div>
-        </div>
-        <div class="form-grid" style="grid-template-columns:1fr 1fr;gap:16px">
-          <div>
-            
-          </div>
-          <div>
-            <label>Hämttid *</label>
-            <input id="time" required type="time">
-          </div>
-        </div>
         <div class="full">
+          <label>Välj maträtt *</label>
+          <div class="food-buttons">
+            <button type="button" onclick="addToCart('Margherita (110 kr)')">Margherita (110 kr)</button>
+            <button type="button" onclick="addToCart('Vesuvio (120 kr)')">Vesuvio (120 kr)</button>
+            <button type="button" onclick="addToCart('Calzone (125 kr)')">Calzone (125 kr)</button>
+            <button type="button" onclick="addToCart('Vegetaria (130 kr)')">Vegetaria (130 kr)</button>
+            <button type="button" onclick="addToCart('Dagens Lunch')">Dagens Lunch</button>
+          </div>
+        </div>
+
+        <div class="full">
+          <label>Din beställning</label>
+          <div id="cart" class="cart-box"></div>
+        </div>
+
+        <div>
+          <label>Hämttid *</label>
+          <input id="time" required type="time">
+        </div>
+
+        <div>
           <label>Extra önskemål</label>
           <input id="extra" placeholder="Specialönskemål...">
         </div>
+
         <div class="full">
           <label>Meddelande till köket</label>
           <textarea id="message" placeholder="Skriv något här..."></textarea>
         </div>
-        <div class="full">
-          <div id="cart" style="margin:15px 0;"></div>
 
-<button class="btn bottom" type="submit">Skicka Beställning</button>
+        <div class="full">
           <button class="btn submit" type="submit">Skicka Beställning</button>
+          <div id="successMessage" class="success-message">
+            <h2>Tack!</h2>
+            <p>Din beställning är skapad. Restaurangen bekräftar vid behov.</p>
+          </div>
         </div>
       </div>
     </form>
@@ -274,7 +273,7 @@ footer{background:#000;padding:120px 24px 48px}
   <div class="wrap">
     <div class="menu-top">
       <div class="section-head">
-        <div class="kicker" style="color:rgba(0,0,0,.3)">Utvalda rätter</div>
+        <div class="kicker">Utvalda rätter</div>
         <h2 class="section-title">Vår Meny</h2>
       </div>
       <div class="filters">
@@ -283,22 +282,22 @@ footer{background:#000;padding:120px 24px 48px}
     </div>
 
     <div class="menu-grid">
-      <div class="dish" onclick="chooseDish('Margherita (110 kr)')">
+      <div class="dish" onclick="addToCartFromMenu('Margherita (110 kr)')">
         <div class="dish-img"><img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=2070&auto=format&fit=crop"><span class="dish-price">110 kr</span></div>
         <div class="dish-info"><div><h3>Margherita</h3><p>Pizza</p></div><div class="circle">›</div></div>
       </div>
 
-      <div class="dish" onclick="chooseDish('Vesuvio (120 kr)')">
+      <div class="dish" onclick="addToCartFromMenu('Vesuvio (120 kr)')">
         <div class="dish-img"><img src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?q=80&w=1935&auto=format&fit=crop"><span class="dish-price">120 kr</span></div>
         <div class="dish-info"><div><h3>Vesuvio</h3><p>Pizza</p></div><div class="circle">›</div></div>
       </div>
 
-      <div class="dish" onclick="chooseDish('Calzone (125 kr)')">
+      <div class="dish" onclick="addToCartFromMenu('Calzone (125 kr)')">
         <div class="dish-img"><img src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?q=80&w=2076&auto=format&fit=crop"><span class="dish-price">125 kr</span></div>
         <div class="dish-info"><div><h3>Calzone</h3><p>Inbakad</p></div><div class="circle">›</div></div>
       </div>
 
-      <div class="dish" onclick="chooseDish('Vegetaria (130 kr)')">
+      <div class="dish" onclick="addToCartFromMenu('Vegetaria (130 kr)')">
         <div class="dish-img"><img src="https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?q=80&w=1974&auto=format&fit=crop"><span class="dish-price">130 kr</span></div>
         <div class="dish-info"><div><h3>Vegetaria</h3><p>Pizza</p></div><div class="circle">›</div></div>
       </div>
@@ -339,116 +338,97 @@ footer{background:#000;padding:120px 24px 48px}
 </footer>
 
 <script>
-const RESTAURANT_PHONE = "+46702929024";
+const RESTAURANT_PHONE = "0702929024";
+let cart = [];
 
-window.addEventListener("scroll",()=> {
+window.addEventListener("scroll", () => {
   document.getElementById("nav").classList.toggle("scrolled", window.scrollY > 50);
 });
 
-function openMenu(){document.getElementById("mobile").classList.add("open")}
-function closeMenu(){document.getElementById("mobile").classList.remove("open")}
+function openMenu(){
+  document.getElementById("mobile").classList.add("open");
+}
 
-function chooseDish(dish){
-  document.getElementById("dish").value = dish;
+function closeMenu(){
+  document.getElementById("mobile").classList.remove("open");
+}
+
+function addToCart(item){
+  if(cart.length >= 20){
+    alert("Du kan max lägga 20 maträtter i samma beställning.");
+    return;
+  }
+
+  cart.push(item);
+  renderCart();
+}
+
+function addToCartFromMenu(item){
+  addToCart(item);
   document.getElementById("sms-order").scrollIntoView({behavior:"smooth"});
+}
+
+function removeFromCart(index){
+  cart.splice(index, 1);
+  renderCart();
+}
+
+function renderCart(){
+  const cartDiv = document.getElementById("cart");
+
+  if(cart.length === 0){
+    cartDiv.innerHTML = "<p style='color:rgba(255,255,255,.55);font-weight:700;'>Ingen maträtt vald ännu.</p>";
+    return;
+  }
+
+  cartDiv.innerHTML = cart.map((item, index) => `
+    <div class="cart-row">
+      <span>${index + 1}. ${item}</span>
+      <button type="button" onclick="removeFromCart(${index})">Ta bort</button>
+    </div>
+  `).join("");
 }
 
 function sendSMS(e){
   e.preventDefault();
 
-  const name=document.getElementById("name").value.trim();
-  const phone=document.getElementById("phone").value.trim();
-  const dish=document.getElementById("dish").value.trim();
-  const quantity=document.getElementById("quantity").value.trim();
-  const time=document.getElementById("time").value.trim();
-  const extra=document.getElementById("extra").value.trim();
-  const message=document.getElementById("message").value.trim();
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const time = document.getElementById("time").value.trim();
+  const extra = document.getElementById("extra").value.trim();
+  const message = document.getElementById("message").value.trim();
 
-  if(!name || !phone || !dish || !time){
-    alert("Fyll i namn, telefon, maträtt och hämttid.");
+  if(!name || !phone || !time){
+    alert("Fyll i namn, telefon och hämttid.");
+    return;
+  }
+
+  if(cart.length === 0){
+    alert("Lägg till minst en maträtt först.");
     return;
   }
 
   const text =
 `Hej Köket! Jag vill beställa take away:
+
+Beställning:
+${cart.map((item, i) => `${i + 1}. ${item}`).join("\n")}
+
 Namn: ${name}
 Telefon: ${phone}
-Maträtt: ${dish}
-Antal: ${quantity}
+Hämttid: ${time}
 Extra: ${extra || "Inga"}
-Hämttid: ${time}${message ? "\nMeddelande: " + message : ""}`;
+${message ? "Meddelande: " + message : ""}`;
 
-  const isIOS=/iPad|iPhone|iPod/i.test(navigator.userAgent);
-  const sep=isIOS ? "&" : "?";
-  window.location.href=`sms:${RESTAURANT_PHONE}${sep}body=${encodeURIComponent(text)}`;
-}
-  <script>
-let cart = [];
-
-function addToCart(name) {
-  cart.push(name);
-  renderCart();
-}
-
-function removeFromCart(index) {
-  cart.splice(index, 1);
-  renderCart();
-}
-
-function renderCart() {
-  const cartDiv = document.getElementById("cart");
-
-  if (!cartDiv) return;
-
-  if (cart.length === 0) {
-    cartDiv.innerHTML = "<p style='color:#aaa;'>Ingen maträtt vald ännu.</p>";
-    return;
-  }
-
-  cartDiv.innerHTML = cart.map((item, index) => `
-    <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
-      <span>${index + 1}. ${item}</span>
-      <button onclick="removeFromCart(${index})" style="background:none;color:#e56bff;border:none;">Ta bort</button>
-    </div>
-  `).join("");
-}
-
-function sendSMS() {
-  if (cart.length === 0) {
-    alert("Lägg till minst en maträtt först.");
-    return;
-  }
-
-  const name = document.getElementById("customerName")?.value || "";
-  const phone = document.getElementById("customerPhone")?.value || "";
-  const pickup = document.getElementById("pickupTime")?.value || "";
-  const comment = document.getElementById("comment")?.value || "";
-
-  if (cart.length === 0) {
-  alert("Lägg till minst en maträtt");
-  return;
-}
-  const text =
-`Hej! Jag vill beställa:
-
-${cart.map((item, i) => `${i+1}. ${item}`).join("\n")}
-
-Namn: ${name}
-Telefon: ${phone}
-Tid: ${pickup}
-Kommentar: ${comment}`;
-
-  window.location.href = `sms:0701234567?&body=${encodeURIComponent(text)}`;
+  window.location.href = `sms:${RESTAURANT_PHONE}?body=${encodeURIComponent(text)}`;
 
   setTimeout(() => {
-    const success = document.getElementById("successMessage");
-    if (success) success.style.display = "block";
-  }, 500);
+    document.getElementById("successMessage").style.display = "block";
+  }, 600);
 }
 
 renderCart();
 </script>
-
 
 </body>
 </html>
