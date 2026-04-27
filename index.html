@@ -1,349 +1,371 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Köket Restaurang & Pizzeria</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: { accent: "#d946ef" },
-      fontFamily: { sans: ["Plus Jakarta Sans", "sans-serif"] }
-    }
-  }
-}
-</script>
-
 <style>
-body{font-family:"Plus Jakarta Sans",sans-serif;background:#020202;color:white;overflow-x:hidden}
-.glow-button{padding:20px 40px;background:#d946ef;color:white;border-radius:16px;font-weight:900;text-transform:uppercase;font-size:12px;letter-spacing:.2em;box-shadow:0 0 40px rgba(217,70,239,.4);transition:.3s}
-.glow-button:active{transform:scale(.95)}
-.border-text{-webkit-text-stroke:1px currentColor;color:transparent}
-@keyframes slow-zoom{from{transform:scale(1)}to{transform:scale(1.15)}}
-.animate-slow-zoom{animation:slow-zoom 20s infinite alternate linear}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Plus Jakarta Sans",sans-serif;background:#020202;color:#fff;overflow-x:hidden}
+:root{--accent:#d946ef}
+a{text-decoration:none;color:inherit}
+
+.nav{position:fixed;top:0;left:0;width:100%;z-index:50;padding:24px 24px;transition:.4s}
+.nav.scrolled{background:rgba(0,0,0,.82);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.06);padding:16px 24px}
+.nav-inner{max-width:1280px;margin:auto;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-icon{width:48px;height:48px;border-radius:18px;background:var(--accent);display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(217,70,239,.5)}
+.logo-text{font-size:24px;font-weight:900;text-transform:uppercase;letter-spacing:-1px}
+.menu-btn{background:none;border:0;color:white;font-size:30px}
+.desktop-links{display:none;gap:40px}
+.desktop-links a{font-size:14px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+.desktop-links a:hover{color:var(--accent)}
+
+.hero{position:relative;height:100vh;display:flex;align-items:center;padding:0 24px;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;opacity:.6;animation:zoom 20s infinite alternate linear}
+.hero-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(to right,#000 0%,rgba(0,0,0,.72) 38%,rgba(0,0,0,.08) 100%)}
+.hero-content{position:relative;z-index:2;width:100%;max-width:1280px;margin:auto;padding-top:80px}
+.badge{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;background:rgba(217,70,239,.2);border:1px solid rgba(217,70,239,.3);border-radius:999px;margin-bottom:32px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 1.4s infinite}
+.badge span{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.2em;color:var(--accent)}
+h1{font-size:clamp(64px,14vw,128px);line-height:.86;font-weight:900;text-transform:uppercase;font-style:italic;letter-spacing:-5px;margin-bottom:32px}
+.outline{color:transparent;-webkit-text-stroke:1px var(--accent)}
+.hero p{max-width:580px;color:rgba(255,255,255,.62);font-size:18px;line-height:1.7;font-weight:600;margin-bottom:44px}
+.actions{display:flex;flex-direction:column;gap:20px;align-items:flex-start}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:20px 40px;border-radius:16px;background:var(--accent);color:white;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.2em;box-shadow:0 0 40px rgba(217,70,239,.4);border:0}
+.btn.secondary{background:transparent;border:1px solid rgba(255,255,255,.22);box-shadow:none}
+.btn.secondary:hover{background:white;color:black}
+
+section{padding:120px 24px}
+.wrap{max-width:1280px;margin:auto}
+.section-head{margin-bottom:48px}
+.section-head.center{text-align:center}
+.kicker{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.5em;color:var(--accent);margin-bottom:18px}
+.section-title{font-size:clamp(48px,9vw,86px);font-weight:900;text-transform:uppercase;font-style:italic;line-height:.82;letter-spacing:-4px}
+.order{background:#050505}
+.form-card{max-width:900px;margin:auto;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);border-radius:48px;padding:32px;backdrop-filter:blur(18px);box-shadow:0 25px 80px rgba(0,0,0,.5)}
+.form-grid{display:grid;gap:28px}
+label{display:block;margin:0 0 10px 16px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.3em;color:rgba(255,255,255,.42)}
+input,select,textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.11);border-radius:16px;padding:20px 24px;color:white;font-size:16px;outline:none}
+select option{background:#050505}
+textarea{min-height:110px;resize:none}
+input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+.full{grid-column:1/-1}
+.submit{width:100%;padding:24px;margin-top:10px}
+
+.lunch{background:#020202}
+.lunch-grid{display:grid;gap:64px;align-items:center}
+.lunch-list{display:grid;gap:24px}
+.lunch-item{display:flex;gap:24px;align-items:flex-start;padding:24px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);border-radius:28px}
+.day{color:var(--accent);font-weight:900;text-transform:uppercase;letter-spacing:.2em;font-size:14px;padding-top:4px}
+.lunch-item p{font-size:20px;font-weight:800}
+.lunch-img{position:relative}
+.lunch-img .photo{aspect-ratio:4/5;border-radius:48px;overflow:hidden}
+.lunch-img img{width:100%;height:100%;object-fit:cover}
+.price-card{display:none;position:absolute;left:-40px;bottom:-40px;background:var(--accent);padding:40px;border-radius:44px;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.price-card strong{display:block;font-size:40px;font-weight:900;font-style:italic}
+
+.menu-section{background:white;color:black}
+.menu-top{display:flex;flex-direction:column;gap:28px;margin-bottom:70px}
+.filters{display:flex;gap:14px;flex-wrap:wrap}
+.filters button{padding:10px 24px;border:2px solid #000;border-radius:999px;background:white;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.18em}
+.menu-grid{display:grid;gap:40px}
+.dish{cursor:pointer}
+.dish-img{position:relative;aspect-ratio:1/1;border-radius:32px;overflow:hidden;background:#eee;margin-bottom:24px}
+.dish-img img{width:100%;height:100%;object-fit:cover;transition:.7s}
+.dish:hover img{transform:scale(1.1)}
+.dish-price{position:absolute;top:16px;right:16px;background:white;padding:10px 16px;border-radius:14px;font-weight:900;box-shadow:0 10px 25px rgba(0,0,0,.18)}
+.dish-info{display:flex;align-items:center;justify-content:space-between;padding:0 8px}
+.dish h3{font-size:24px;font-weight:900;text-transform:uppercase;letter-spacing:-1px}
+.dish p{font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.18em;color:rgba(0,0,0,.4);font-style:italic}
+.circle{width:42px;height:42px;border-radius:50%;border:2px solid #000;display:flex;align-items:center;justify-content:center;font-weight:900}
+.dish:hover .circle{background:var(--accent);border-color:var(--accent);color:white}
+
+footer{background:#000;padding:120px 24px 48px}
+.footer-inner{max-width:1280px;margin:auto;border-top:1px solid rgba(255,255,255,.1);padding-top:80px}
+.footer-grid{display:grid;gap:60px;margin-bottom:80px}
+.footer-title{font-size:56px;font-weight:900;text-transform:uppercase;font-style:italic;line-height:.82;letter-spacing:-3px;margin-bottom:34px}
+.address{display:flex;gap:18px;align-items:flex-start;font-size:28px;font-weight:900;line-height:1}
+.socials{display:flex;gap:22px;margin-top:48px}
+.socials a{width:56px;height:56px;border:1px solid rgba(255,255,255,.1);border-radius:18px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.6);font-weight:900}
+.foot-head{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.3em;color:rgba(255,255,255,.4);margin-bottom:40px}
+.hours{display:grid;gap:24px}
+.hours div{display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:16px;font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:.12em}
+.hours span:last-child{color:var(--accent)}
+.contact-phone{font-size:32px;font-weight:900;margin-bottom:16px}
+.contact-mail{font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.2em;color:rgba(255,255,255,.4)}
+.footer-bottom{display:flex;flex-direction:column;gap:16px;border-top:1px solid rgba(255,255,255,.06);padding-top:48px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.35em;color:rgba(255,255,255,.22)}
+
+.mobile{position:fixed;inset:0;background:#000;z-index:80;padding:40px;display:none;flex-direction:column;justify-content:center}
+.mobile.open{display:flex}
+.close{position:absolute;top:40px;right:40px;background:none;border:0;color:white;font-size:48px}
+.mobile a{font-size:clamp(42px,12vw,72px);font-weight:900;text-transform:uppercase;font-style:italic;line-height:.9;letter-spacing:-3px;margin-bottom:32px}
+.mobile a:hover{color:var(--accent)}
+
+@keyframes zoom{from{transform:scale(1)}to{transform:scale(1.15)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+@media(min-width:768px){
+.actions{flex-direction:row;align-items:center}
+.form-grid{grid-template-columns:1fr 1fr}
+.menu-grid{grid-template-columns:repeat(2,1fr)}
+.lunch-grid{grid-template-columns:1fr 1fr}
+.footer-grid{grid-template-columns:2fr 1fr 1fr}
+.footer-bottom{flex-direction:row;justify-content:space-between}
+}
+@media(min-width:1024px){
+.desktop-links{display:flex}
+.menu-btn{display:none}
+.menu-grid{grid-template-columns:repeat(4,1fr)}
+.price-card{display:block}
+}
 </style>
 </head>
 
 <body>
-<div id="root"></div>
 
-<script type="text/babel">
-const {useState,useEffect}=React;
-const RESTAURANT_PHONE="+46702929024";
-
-const navLinks=[
-  {name:"Hem",href:"#"},
-  {name:"Beställ Online",href:"#sms-order"},
-  {name:"Dagens Lunch",href:"#lunch"},
-  {name:"Meny",href:"#meny"},
-  {name:"Kontakt",href:"#kontakt"}
-];
-
-const dishes=[
-  {id:1,name:"Margherita",price:"110 kr",image:"https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=2070&auto=format&fit=crop",category:"Pizza"},
-  {id:2,name:"Vesuvio",price:"120 kr",image:"https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?q=80&w=1935&auto=format&fit=crop",category:"Pizza"},
-  {id:3,name:"Calzone",price:"125 kr",image:"https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?q=80&w=2076&auto=format&fit=crop",category:"Inbakad"},
-  {id:4,name:"Vegetaria",price:"130 kr",image:"https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?q=80&w=1974&auto=format&fit=crop",category:"Pizza"}
-];
-
-function SectionHeader({title,subtitle,align="center",dark=false}){
-  return(
-    <div className={`mb-12 ${align==="center"?"text-center":"text-left"}`}>
-      <p className={`text-xs font-black uppercase tracking-[0.5em] mb-4 ${dark?"text-black/30":"text-accent"}`}>{subtitle}</p>
-      <h2 className={`text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.8] italic ${dark?"text-black":"text-white"}`}>{title}</h2>
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <div class="logo">
+      <div class="logo-icon">🍕</div>
+      <div class="logo-text">KÖKET</div>
     </div>
-  )
-}
+    <div class="desktop-links">
+      <a href="#">Hem</a>
+      <a href="#sms-order">Beställ Online</a>
+      <a href="#lunch">Dagens Lunch</a>
+      <a href="#meny">Meny</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
+    <button class="menu-btn" onclick="openMenu()">☰</button>
+  </div>
+</nav>
 
-function OrderForm(){
-  const [submitted,setSubmitted]=useState(false);
-  const [formData,setFormData]=useState({name:"",phone:"",dish:"",quantity:"1",extra:"",time:"",message:""});
+<div class="mobile" id="mobile">
+  <button class="close" onclick="closeMenu()">×</button>
+  <a href="#" onclick="closeMenu()">Hem</a>
+  <a href="#sms-order" onclick="closeMenu()">Beställ Online</a>
+  <a href="#lunch" onclick="closeMenu()">Dagens Lunch</a>
+  <a href="#meny" onclick="closeMenu()">Meny</a>
+  <a href="#kontakt" onclick="closeMenu()">Kontakt</a>
+</div>
 
-  function handleChange(e){
-    setFormData({...formData,[e.target.name]:e.target.value});
-  }
+<section class="hero">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop" alt="Pizza">
+  </div>
+  <div class="hero-content">
+    <div class="badge"><i class="dot"></i><span>Öppet ikväll till 22:00</span></div>
+    <h1>Smak av<br><span class="outline">Kvalitet</span></h1>
+    <p>God mat i Överkalix. Välkommen till en plats för pizza, dryck och trevlig atmosfär.</p>
+    <div class="actions">
+      <a class="btn" href="#sms-order">Beställ Online</a>
+      <a class="btn secondary" href="#meny">Utforska Meny</a>
+    </div>
+  </div>
+</section>
 
-  function handleSubmit(e){
-    e.preventDefault();
+<section class="order" id="sms-order">
+  <div class="wrap">
+    <div class="section-head center">
+      <div class="kicker">Take Away Systems</div>
+      <h2 class="section-title">Online Beställning</h2>
+    </div>
 
-    if(!formData.name || !formData.phone || !formData.dish || !formData.time){
-      alert("Fyll i namn, telefon, maträtt och hämttid.");
-      return;
-    }
-
-    const text=`Hej Köket! Jag vill beställa take away:
-Namn: ${formData.name}
-Telefon: ${formData.phone}
-Maträtt: ${formData.dish}
-Antal: ${formData.quantity}
-Extra: ${formData.extra || "Inga"}
-Hämttid: ${formData.time}${formData.message ? "\nMeddelande: " + formData.message : ""}`;
-
-    const isIOS=/iPad|iPhone|iPod/i.test(navigator.userAgent);
-    const separator=isIOS ? "&" : "?";
-    window.location.href=`sms:${RESTAURANT_PHONE}${separator}body=${encodeURIComponent(text)}`;
-    setTimeout(()=>setSubmitted(true),1500);
-  }
-
-  if(submitted){
-    return(
-      <div className="bg-white/5 border border-accent/30 p-12 rounded-[3rem] text-center">
-        <div className="w-20 h-20 bg-accent rounded-full flex items-center justify-center mx-auto mb-8 shadow-[0_0_30px_rgba(217,70,239,0.5)] text-3xl">✉</div>
-        <h3 className="text-4xl font-black uppercase italic mb-4">Tack för din beställning!</h3>
-        <p className="text-white/60 mb-8 max-w-sm mx-auto">Vi har öppnat din SMS-app. Skicka meddelandet för att slutföra beställningen.</p>
-        <button onClick={()=>setSubmitted(false)} className="text-accent font-black uppercase text-xs tracking-widest border-b border-accent pb-1">Gör en till beställning</button>
-      </div>
-    )
-  }
-
-  return(
-    <form onSubmit={handleSubmit} className="bg-white/5 border border-white/5 p-8 md:p-12 rounded-[3rem] backdrop-blur-xl text-left shadow-2xl">
-      <div className="grid md:grid-cols-2 gap-8">
-
-        <div className="space-y-2">
-          <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 ml-4">Namn *</label>
-          <input name="name" required value={formData.name} onChange={handleChange} placeholder="Ditt fullständiga namn" className="w-full bg-white/5 border border-white/10 px-8 py-5 rounded-2xl focus:border-accent focus:outline-none placeholder:text-white/10"/>
+    <form class="form-card" onsubmit="sendSMS(event)">
+      <div class="form-grid">
+        <div>
+          <label>Namn *</label>
+          <input id="name" required placeholder="Ditt fullständiga namn">
         </div>
-
-        <div className="space-y-2">
-          <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 ml-4">Telefon *</label>
-          <input name="phone" required value={formData.phone} onChange={handleChange} placeholder="07X-XXX XX XX" className="w-full bg-white/5 border border-white/10 px-8 py-5 rounded-2xl focus:border-accent focus:outline-none placeholder:text-white/10"/>
+        <div>
+          <label>Telefon *</label>
+          <input id="phone" required placeholder="07X-XXX XX XX">
         </div>
-
-        <div className="space-y-2">
-          <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 ml-4">Välj Maträtt *</label>
-          <select name="dish" required value={formData.dish} onChange={handleChange} className="w-full bg-white/5 border border-white/10 px-8 py-5 rounded-2xl focus:border-accent focus:outline-none appearance-none">
-            <option value="" className="bg-[#050505]">Välj rätt...</option>
-            {dishes.map(d=><option key={d.name} value={d.name} className="bg-[#050505]">{d.name} ({d.price})</option>)}
-            <option value="Dagens Lunch" className="bg-[#050505]">Dagens Lunch</option>
+        <div>
+          <label>Välj Maträtt *</label>
+          <select id="dish" required>
+            <option value="">Välj rätt...</option>
+            <option>Margherita (110 kr)</option>
+            <option>Vesuvio (120 kr)</option>
+            <option>Calzone (125 kr)</option>
+            <option>Vegetaria (130 kr)</option>
+            <option>Dagens Lunch</option>
           </select>
         </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 ml-4">Antal</label>
-            <input name="quantity" type="number" min="1" value={formData.quantity} onChange={handleChange} className="w-full bg-white/5 border border-white/10 px-8 py-5 rounded-2xl focus:border-accent focus:outline-none"/>
+        <div class="form-grid" style="grid-template-columns:1fr 1fr;gap:16px">
+          <div>
+            <label>Antal</label>
+            <input id="quantity" type="number" min="1" value="1">
           </div>
-          <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 ml-4">Hämttid *</label>
-            <input name="time" type="time" required value={formData.time} onChange={handleChange} className="w-full bg-white/5 border border-white/10 px-8 py-5 rounded-2xl focus:border-accent focus:outline-none"/>
+          <div>
+            <label>Hämttid *</label>
+            <input id="time" required type="time">
           </div>
         </div>
-
-        <div className="md:col-span-2 space-y-2">
-          <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 ml-4">Extra önskemål</label>
-          <input name="extra" value={formData.extra} onChange={handleChange} placeholder="Specialönskemål..." className="w-full bg-white/5 border border-white/10 px-8 py-5 rounded-2xl focus:border-accent focus:outline-none placeholder:text-white/10"/>
+        <div class="full">
+          <label>Extra önskemål</label>
+          <input id="extra" placeholder="Specialönskemål...">
         </div>
-
-        <div className="md:col-span-2 space-y-2">
-          <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 ml-4">Meddelande till köket</label>
-          <textarea name="message" value={formData.message} onChange={handleChange} rows="3" placeholder="Skriv något här..." className="w-full bg-white/5 border border-white/10 px-8 py-5 rounded-2xl focus:border-accent focus:outline-none placeholder:text-white/10 resize-none"></textarea>
+        <div class="full">
+          <label>Meddelande till köket</label>
+          <textarea id="message" placeholder="Skriv något här..."></textarea>
         </div>
-
-        <div className="md:col-span-2 pt-6">
-          <button type="submit" className="w-full px-8 py-6 bg-accent text-white rounded-2xl font-black uppercase text-sm tracking-[0.2em] shadow-[0_0_30px_rgba(217,70,239,0.4)] active:scale-95 transition-all">
-            Skicka Beställning
-          </button>
+        <div class="full">
+          <button class="btn submit" type="submit">Skicka Beställning</button>
         </div>
-
       </div>
     </form>
-  )
-}
+  </div>
+</section>
 
-function App(){
-  const [isScrolled,setIsScrolled]=useState(false);
-  const [mobileMenuOpen,setMobileMenuOpen]=useState(false);
+<section class="lunch" id="lunch">
+  <div class="wrap lunch-grid">
+    <div>
+      <div class="section-head">
+        <div class="kicker">Måndag - Fredag 10:30-14:00</div>
+        <h2 class="section-title">Dagens Lunch</h2>
+      </div>
 
-  useEffect(()=>{
-    const handleScroll=()=>setIsScrolled(window.scrollY>50);
-    window.addEventListener("scroll",handleScroll);
-    return()=>window.removeEventListener("scroll",handleScroll);
-  },[]);
-
-  return(
-    <div className="min-h-screen bg-[#020202] text-white">
-
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled?"bg-black/80 backdrop-blur-xl border-b border-white/5 py-4":"bg-transparent py-6"}`}>
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-accent rounded-2xl flex items-center justify-center shadow-[0_0_20px_rgba(217,70,239,0.5)] text-2xl">🍕</div>
-            <span className="text-2xl font-black tracking-tighter uppercase">Köket</span>
-          </div>
-
-          <div className="hidden md:flex gap-10">
-            {navLinks.map(link=>(
-              <a key={link.name} href={link.href} className="text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors">{link.name}</a>
-            ))}
-          </div>
-
-          <button className="md:hidden text-white text-3xl" onClick={()=>setMobileMenuOpen(true)}>☰</button>
-        </div>
-      </nav>
-
-      <section className="relative h-screen flex items-center px-6 sm:px-12 overflow-hidden">
-        <div className="absolute inset-0">
-          <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop" className="w-full h-full object-cover opacity-60 scale-110 animate-slow-zoom" alt="Pizza"/>
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent"></div>
-        </div>
-
-        <div className="relative max-w-7xl mx-auto w-full">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/20 border border-accent/30 rounded-full mb-8">
-            <span className="w-2 h-2 bg-accent rounded-full animate-pulse"></span>
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-accent">Öppet ikväll till 22:00</span>
-          </div>
-
-          <h1 className="text-6xl md:text-9xl font-black mb-8 leading-[0.9] tracking-tighter uppercase italic">
-            Smak av<br/>
-            <span className="text-transparent border-text text-fuchsia-500">Kvalitet</span>
-          </h1>
-
-          <p className="max-w-xl text-lg text-white/60 mb-12 font-medium leading-relaxed">
-            God mat i Överkalix. Välkommen till en plats för pizza, dryck och trevlig atmosfär.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center gap-6">
-            <a href="#sms-order" className="glow-button">Beställ Online</a>
-            <a href="#meny" className="px-10 py-5 border border-white/20 hover:bg-white hover:text-black rounded-2xl font-black uppercase text-xs tracking-[0.2em] transition-all">Utforska Meny</a>
-          </div>
-        </div>
-      </section>
-
-      <section id="sms-order" className="py-32 bg-[#050505] px-6 sm:px-12">
-        <div className="max-w-4xl mx-auto text-center">
-          <SectionHeader title="Online Beställning" subtitle="Take Away Systems"/>
-          <OrderForm/>
-        </div>
-      </section>
-
-      <section id="lunch" className="py-32 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-20 items-center">
-            <div>
-              <SectionHeader title="Dagens Lunch" subtitle="Måndag - Fredag 10:30-14:00" align="left"/>
-              <div className="space-y-6 mt-12">
-                {[
-                  ["Mån","Klassisk Husmanskost & Pizza Buffé"],
-                  ["Tis","Grillad Kyckling med Rostad Potatis"],
-                  ["Ons","Pasta Carbonara & Stor Salladsbar"],
-                  ["Tor","Ärtsoppa & Pannkakor"],
-                  ["Fre","Helgstek med Gräddsås & Gelé"]
-                ].map(item=>(
-                  <div key={item[0]} className="flex items-start gap-6 p-6 bg-white/5 border border-white/5 rounded-3xl hover:bg-white/10 transition-colors">
-                    <span className="text-accent font-black uppercase text-sm tracking-widest pt-1">{item[0]}</span>
-                    <p className="text-xl font-bold">{item[1]}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="relative">
-              <div className="aspect-[4/5] rounded-[3rem] overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?q=80&w=2070&auto=format&fit=crop" className="w-full h-full object-cover" alt="Atmosphere"/>
-              </div>
-              <div className="absolute -bottom-10 -left-10 bg-accent p-10 rounded-[3rem] shadow-2xl hidden lg:block">
-                <span className="block text-4xl font-black italic">125:-</span>
-                <span className="text-xs font-bold uppercase tracking-widest text-white/80 italic">Inkl. dryck, kaffe & kaka</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="meny" className="py-32 bg-white text-black px-6 sm:px-12">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end gap-10 mb-20">
-            <SectionHeader title="Vår Meny" subtitle="Utvalda rätter" dark align="left"/>
-            <div className="flex gap-4 flex-wrap">
-              {["Pizza","Pasta","Grill","Sallad"].map(cat=>(
-                <button key={cat} className="px-6 py-2 border-2 border-black rounded-full font-bold uppercase text-[10px] tracking-widest hover:bg-black hover:text-white transition-all">{cat}</button>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
-            {dishes.map(dish=>(
-              <div key={dish.id} className="group cursor-pointer">
-                <div className="relative aspect-square rounded-[2rem] overflow-hidden mb-6 bg-gray-100">
-                  <img src={dish.image} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt={dish.name}/>
-                  <div className="absolute top-4 right-4 bg-white px-4 py-2 rounded-xl font-bold shadow-lg">{dish.price}</div>
-                </div>
-                <div className="flex justify-between items-center px-2">
-                  <div>
-                    <h3 className="text-2xl font-black uppercase tracking-tight">{dish.name}</h3>
-                    <p className="text-sm font-bold text-black/40 uppercase tracking-widest italic">{dish.category}</p>
-                  </div>
-                  <div className="w-10 h-10 border-2 border-black rounded-full flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all">→</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <footer id="kontakt" className="pt-32 pb-12 bg-black px-6 sm:px-12">
-        <div className="max-w-7xl mx-auto border-t border-white/10 pt-20">
-          <div className="grid md:grid-cols-4 gap-16 mb-20">
-            <div className="col-span-2">
-              <h2 className="text-5xl font-black uppercase tracking-tighter mb-8 leading-[0.8] italic">Hitta Hit</h2>
-              <div className="flex items-start gap-4 mb-10">
-                <span className="text-accent mt-1 text-2xl">📍</span>
-                <p className="text-2xl font-bold leading-none">Storgatan 12,<br/>956 31 Överkalix</p>
-              </div>
-              <div className="flex gap-6 mt-12">
-                <a href="#" className="w-14 h-14 border border-white/10 rounded-2xl flex items-center justify-center hover:bg-accent hover:border-accent transition-all text-white/60 hover:text-white">◎</a>
-                <a href="#" className="w-14 h-14 border border-white/10 rounded-2xl flex items-center justify-center hover:bg-accent hover:border-accent transition-all text-white/60 hover:text-white">f</a>
-              </div>
-            </div>
-
-            <div>
-              <h4 className="text-xs font-black uppercase tracking-[0.3em] text-white/40 mb-10">Öppettider</h4>
-              <div className="space-y-6">
-                <div className="flex justify-between border-b border-white/5 pb-4"><span className="font-bold uppercase text-sm tracking-widest">Mån - Tor</span><span className="font-bold text-accent">10:30 - 21:00</span></div>
-                <div className="flex justify-between border-b border-white/5 pb-4"><span className="font-bold uppercase text-sm tracking-widest">Fre</span><span className="font-bold text-accent">10:30 - 22:00</span></div>
-                <div className="flex justify-between"><span className="font-bold uppercase text-sm tracking-widest">Lör - Sön</span><span className="font-bold text-accent">12:00 - 22:00</span></div>
-              </div>
-            </div>
-
-            <div>
-              <h4 className="text-xs font-black uppercase tracking-[0.3em] text-white/40 mb-10">Kontakt</h4>
-              <p className="text-3xl font-black mb-4">0926-771 00</p>
-              <p className="text-sm font-bold text-white/40 uppercase tracking-widest">info@koket.se</p>
-            </div>
-          </div>
-
-          <div className="flex flex-col md:flex-row justify-between items-center border-t border-white/5 pt-12 text-[10px] font-black uppercase tracking-[0.4em] text-white/20 gap-4">
-            <p>© 2024 Köket Restaurang & Pizzeria.</p>
-            <p>Design by EB WEB DESIGN</p>
-          </div>
-        </div>
-      </footer>
-
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 z-[60] bg-black p-10 flex flex-col justify-center">
-          <button className="absolute top-10 right-10 text-white text-5xl" onClick={()=>setMobileMenuOpen(false)}>×</button>
-          <div className="flex flex-col gap-8">
-            {navLinks.map(link=>(
-              <a key={link.name} href={link.href} onClick={()=>setMobileMenuOpen(false)} className="text-5xl font-black uppercase tracking-tighter italic leading-none hover:text-accent transition-colors">{link.name}</a>
-            ))}
-          </div>
-        </div>
-      )}
-
+      <div class="lunch-list">
+        <div class="lunch-item"><span class="day">Mån</span><p>Klassisk Husmanskost & Pizza Buffé</p></div>
+        <div class="lunch-item"><span class="day">Tis</span><p>Grillad Kyckling med Rostad Potatis</p></div>
+        <div class="lunch-item"><span class="day">Ons</span><p>Pasta Carbonara & Stor Salladsbar</p></div>
+        <div class="lunch-item"><span class="day">Tor</span><p>Ärtsoppa & Pannkakor</p></div>
+        <div class="lunch-item"><span class="day">Fre</span><p>Helgstek med Gräddsås & Gelé</p></div>
+      </div>
     </div>
-  )
+
+    <div class="lunch-img">
+      <div class="photo">
+        <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?q=80&w=2070&auto=format&fit=crop" alt="Atmosphere">
+      </div>
+      <div class="price-card">
+        <strong>125:-</strong>
+        <span>Inkl. dryck, kaffe & kaka</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="menu-section" id="meny">
+  <div class="wrap">
+    <div class="menu-top">
+      <div class="section-head">
+        <div class="kicker" style="color:rgba(0,0,0,.3)">Utvalda rätter</div>
+        <h2 class="section-title">Vår Meny</h2>
+      </div>
+      <div class="filters">
+        <button>Pizza</button><button>Pasta</button><button>Grill</button><button>Sallad</button>
+      </div>
+    </div>
+
+    <div class="menu-grid">
+      <div class="dish" onclick="chooseDish('Margherita (110 kr)')">
+        <div class="dish-img"><img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=2070&auto=format&fit=crop"><span class="dish-price">110 kr</span></div>
+        <div class="dish-info"><div><h3>Margherita</h3><p>Pizza</p></div><div class="circle">›</div></div>
+      </div>
+
+      <div class="dish" onclick="chooseDish('Vesuvio (120 kr)')">
+        <div class="dish-img"><img src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?q=80&w=1935&auto=format&fit=crop"><span class="dish-price">120 kr</span></div>
+        <div class="dish-info"><div><h3>Vesuvio</h3><p>Pizza</p></div><div class="circle">›</div></div>
+      </div>
+
+      <div class="dish" onclick="chooseDish('Calzone (125 kr)')">
+        <div class="dish-img"><img src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?q=80&w=2076&auto=format&fit=crop"><span class="dish-price">125 kr</span></div>
+        <div class="dish-info"><div><h3>Calzone</h3><p>Inbakad</p></div><div class="circle">›</div></div>
+      </div>
+
+      <div class="dish" onclick="chooseDish('Vegetaria (130 kr)')">
+        <div class="dish-img"><img src="https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?q=80&w=1974&auto=format&fit=crop"><span class="dish-price">130 kr</span></div>
+        <div class="dish-info"><div><h3>Vegetaria</h3><p>Pizza</p></div><div class="circle">›</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="kontakt">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <h2 class="footer-title">Hitta Hit</h2>
+        <div class="address"><span>📍</span><p>Storgatan 12,<br>956 31 Överkalix</p></div>
+        <div class="socials"><a href="#">◎</a><a href="#">f</a></div>
+      </div>
+
+      <div>
+        <div class="foot-head">Öppettider</div>
+        <div class="hours">
+          <div><span>Mån - Tor</span><span>10:30 - 21:00</span></div>
+          <div><span>Fre</span><span>10:30 - 22:00</span></div>
+          <div><span>Lör - Sön</span><span>12:00 - 22:00</span></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="foot-head">Kontakt</div>
+        <p class="contact-phone">0926-771 00</p>
+        <p class="contact-mail">info@koket.se</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2024 Köket Restaurang & Pizzeria.</p>
+      <p>Design by EB WEB DESIGN</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+const RESTAURANT_PHONE = "+46702929024";
+
+window.addEventListener("scroll",()=> {
+  document.getElementById("nav").classList.toggle("scrolled", window.scrollY > 50);
+});
+
+function openMenu(){document.getElementById("mobile").classList.add("open")}
+function closeMenu(){document.getElementById("mobile").classList.remove("open")}
+
+function chooseDish(dish){
+  document.getElementById("dish").value = dish;
+  document.getElementById("sms-order").scrollIntoView({behavior:"smooth"});
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+function sendSMS(e){
+  e.preventDefault();
+
+  const name=document.getElementById("name").value.trim();
+  const phone=document.getElementById("phone").value.trim();
+  const dish=document.getElementById("dish").value.trim();
+  const quantity=document.getElementById("quantity").value.trim();
+  const time=document.getElementById("time").value.trim();
+  const extra=document.getElementById("extra").value.trim();
+  const message=document.getElementById("message").value.trim();
+
+  if(!name || !phone || !dish || !time){
+    alert("Fyll i namn, telefon, maträtt och hämttid.");
+    return;
+  }
+
+  const text =
+`Hej Köket! Jag vill beställa take away:
+Namn: ${name}
+Telefon: ${phone}
+Maträtt: ${dish}
+Antal: ${quantity}
+Extra: ${extra || "Inga"}
+Hämttid: ${time}${message ? "\nMeddelande: " + message : ""}`;
+
+  const isIOS=/iPad|iPhone|iPod/i.test(navigator.userAgent);
+  const sep=isIOS ? "&" : "?";
+  window.location.href=`sms:${RESTAURANT_PHONE}${sep}body=${encodeURIComponent(text)}`;
+}
 </script>
+
 </body>
 </html>
